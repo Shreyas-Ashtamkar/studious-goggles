@@ -1,10 +1,66 @@
 function getUrls() {
     return document.querySelector("#input-urls textarea").value.split("\n").map(
         (line) => line.trim()
-    ).filter(
-        (line) => line != ""
-    )
+    ).filter( // Remove Erroneous Lines/Whitespaces
+        (line) => {
+            try {
+                new URL(line)
+                return line != ""
+            }
+            catch(e){
+                console.error("ERROR : "+ e + " : " + line);
+                return false;
+            }
+        }
+    ).reduce( // Remove Duplicates
+        (finalUrlList, curr) => {
+            if (!finalUrlList.filter(url => compareUrls(url, curr)).length)
+                finalUrlList.push(curr);
+            return finalUrlList;
+        },
+        []
+    );
 }
+
+function compareUrls(url1, url2) {
+    let similarity = true;
+
+    try{
+        let urlObject1 = new URL(url1);
+        let urlObject2 = new URL(url2);
+
+        similarity = 
+            (
+                urlObject1.host === urlObject2.host 
+                || console.log("check host")
+                || false
+            ) && (
+                urlObject1.pathname === urlObject2.pathname 
+                || console.log("check pathname") 
+                || false
+            ) && (
+                urlObject1.searchParams.size === urlObject2.searchParams.size 
+                || console.log("check params.size") 
+                || false
+            )
+            
+        for (let key of urlObject1.searchParams.keys()) {
+            similarity = similarity && urlObject1.searchParams.get(key) == urlObject2.searchParams.get(key);
+            if (!similarity) {
+                console.log(`check params[${key}]`);
+                break;
+            }
+        }
+    }
+    catch (e){
+        console.error(e);
+        similarity = false;
+    }
+
+    return similarity
+}
+
+
 
 function generate_output() {
     document.querySelector("#output-urls").innerHTML = "List of iFrames :";
