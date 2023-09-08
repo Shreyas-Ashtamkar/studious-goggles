@@ -17,7 +17,7 @@
     <header>
         <!-- place navbar here -->
     </header>
-    <main class="container">
+    <main class="container-fluid px-5">
         <div class="row">
             <div class="col-12">
                 <h1 class="display-2 text-center">xBoard</h1>
@@ -40,9 +40,35 @@
             </div>
             <div class="col">
                 <div class="row">
-                    <h1>Output URL Cards</h1>
+                    <h1>Output iFrame Cards</h1>
                 </div>
                 <div class="row" id="output-urls">
+                    List of iFrames :
+                    <div class="col-12 mt-2 px-0">
+                        <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Button with data-bs-target
+                        </button>
+                        <div class="collapse mt-1" id="collapseExample">
+                            <div class="card card-body">
+                                Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user
+                                activates the relevant trigger.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2 px-0">
+                        <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2"
+                            aria-expanded="false" aria-controls="collapseExample2">
+                            Button with data-bs-target
+                        </button>
+                        <div class="collapse mt-1" id="collapseExample2">
+                            <div class="card card-body">
+                                Some placeholder content for the collapse component. This panel is hidden by default but revealed when the
+                                user
+                                activates the relevant trigger.
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

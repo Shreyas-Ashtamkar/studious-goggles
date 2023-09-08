@@ -7,31 +7,51 @@ function getUrls() {
 }
 
 function generate_output() {
-    document.querySelector("#output-urls").innerHTML = "Enter each url on a new line :";
+    document.querySelector("#output-urls").innerHTML = "List of iFrames :";
     getUrls().forEach(
-        (site) => {
-            newDiv = document.createElement("div");
-            newDiv.classList.add("card");
-            newDiv.classList.add("mt-2");
-            newDiv.classList.add("col-12");
+        (site, index) => {
+            let btn = document.createElement("button");
+            btn.classList.add("btn");
+            btn.classList.add("btn-primary");
+            btn.classList.add("w-100");
+            btn.type = "button";
+            btn.setAttribute("data-bs-toggle", "collapse" );
+            btn.setAttribute("data-bs-target", `#collapseExample${index}`);
+            btn.setAttribute("aria-expanded", "false" );
+            btn.setAttribute("aria-controls", `collapseExample${index}`);
+            btn.innerText = site;
 
-            newDiv2 = document.createElement("div");
-            newDiv2.classList.add("card-body");
+            //INNER LEVEL 2
+            let new_iframe = document.createElement("iframe");
+            new_iframe.classList.add("embed-responsive-item");
+            new_iframe.classList.add("w-100");
+            new_iframe.src = site;
+            new_iframe.width = "100%";
+            new_iframe.height = "400px";
+            
+            //INNER LEVEL 1
+            let new_div_inner = document.createElement("div");
+            new_div_inner.classList.add("embed-responsive");
+            new_div_inner.classList.add("embed-responsive-16by9");
+            new_div_inner.classList.add("collapse");
+            new_div_inner.appendChild(new_iframe);
 
-            newP = document.createElement("p");
-            newP.classList.add("card-text");
-            newP.innerText = site;
+            //OUTER DIV
+            let new_div_outer = document.createElement("div");
+            new_div_outer.classList.add("card-body");
+            new_div_outer.classList.add("mt-1");
+            new_div_inner.id = `collapseExample${index}`;
+            new_div_outer.appendChild(new_div_inner);
 
-            newDiv.appendChild(newDiv2);
-            newDiv2.appendChild(newP);
+            let new_div_wrapper = document.createElement("div");
+            new_div_wrapper.classList.add("col-12");
+            new_div_wrapper.classList.add("mt-2");
+            new_div_wrapper.classList.add("px-0");
+            new_div_wrapper.classList.add("px-0");
+            new_div_wrapper.appendChild(btn);
+            new_div_wrapper.appendChild(new_div_outer);
 
-            newDiv.onclick = (e) => {
-                let site_url = e.target.textContent;
-                console.log(`clicking on ${site_url}`);
-                window.open(site_url, '_blank');
-            }
-
-            document.querySelector("#output-urls").appendChild(newDiv);
+            document.querySelector("#output-urls").appendChild(new_div_wrapper);
         }
     );
 }
